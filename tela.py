@@ -68,13 +68,13 @@ class Application(Main):
         self.btnlipar = Button(self.frame1, text='limpar', bg='purple', command=self.limpar_entries)
         self.btnlipar.place(relx=0.05, rely=0.05, relwidth=0.15, relheight=0.15)
 
-        self.btnbuscar = Button(self.frame1, text='buscar', bg='orange')
-        self.btnbuscar.place(relx=0.21, rely=0.05, relwidth=0.15, relheight=0.15)
+        self.btnlistar = Button(self.frame1, text='listar', bg='orange',command=self.listar_clientes)
+        self.btnlistar.place(relx=0.21, rely=0.05, relwidth=0.15, relheight=0.15)
 
         self.btncadastrar = Button(self.frame1, text='cadastrar', bg='lightgreen', command=self.inserir_clientes)
         self.btncadastrar.place(relx=0.42, rely=0.05, relwidth=0.15, relheight=0.15)
 
-        self.btnatualizar = Button(self.frame1, text='atualizar', bg='blue', command=self.listar_clientes)
+        self.btnatualizar = Button(self.frame1, text='atualizar', bg='blue', command=self.atualizar_registro)
         self.btnatualizar.place(relx=0.58, rely=0.05, relwidth=0.15, relheight=0.15)
 
         self.btnapagar = Button(self.frame1, text='apagar', bg='red', command=self.deletar_cliente)

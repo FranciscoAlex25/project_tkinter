@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import messagebox
+
 import sqlite3
 
 
@@ -35,22 +37,26 @@ class Main:
             print(e)
 
     def inserir_clientes(self):
+
         self.nome = self.entrynome.get()
         self.cidade = self.entrycidade.get()
         self.telefone = self.entrytelefone.get()
 
-        try:
-            self.conecta_db()
-            self.cursor.execute('''
-                            INSERT INTO clientes (nome, cidade, telefone) VALUES(
-                                ?, ?, ?
-                            );''', (self.nome, self.cidade, self.telefone))
-            self.conn.commit(); print('cadastrado com sucesso!')
-        except Exception as e:
-            print(e)
-        finally:
-            self.limpar_entries()
-            self.listar_clientes()
+        if self.nome != '' and self.cidade != '' and self.telefone != '':
+            try:
+                self.conecta_db()
+                self.cursor.execute('''
+                                INSERT INTO clientes (nome, cidade, telefone) VALUES(
+                                    ?, ?, ?
+                                );''', (self.nome, self.cidade, self.telefone))
+                self.conn.commit(); print('cadastrado com sucesso!')
+            except Exception as e:
+                print(e)
+            finally:
+                self.limpar_entries()
+                self.listar_clientes()
+        else:
+            messagebox.showinfo('campo vazio', 'Existem campos vazio')
 
     def listar_clientes(self):
         self.tabela.delete(*self.tabela.get_children())
@@ -85,6 +91,22 @@ class Main:
         self.cursor.execute('''
             DELETE FROM clientes WHERE cod = (?);
          ''', (self.codigo))
+        self.conn.commit()
+
+        self.limpar_entries()
+        self.listar_clientes()
+
+    def atualizar_registro(self):
+        self.codigo = self.entrycodigo.get()
+        self.nome = self.entrynome.get()
+        self.cidade = self.entrycidade.get()
+        self.telefone = self.entrytelefone.get()
+
+        self.conecta_db()
+        self.cursor.execute('''UPDATE clientes SET
+            cod = (?), nome = (?), cidade = (?), telefone = (?)
+        WHERE cod = (?);''', (self.codigo, self.nome, self.cidade, self.telefone, self.codigo))
+
         self.conn.commit()
 
         self.limpar_entries()
